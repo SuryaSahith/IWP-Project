@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineSuggest</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="navbar">
+        <div class="brand">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="CineSuggest Logo">
+          <h1>CineSuggest</h1>
+        </div>
+        <div class="menu">
+          <ul>
+            <li>
+              <a href="{{ url_for('index') }}" class="recommend-btn">Search</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <h2>Search for a Movie</h2>
+      <form action="{{ url_for('recommend') }}" method="POST">
+        <input type="text" id="movie_title" name="movie_title" placeholder="Enter a movie title..." onkeyup="showMovies()">
+        <button type="submit">Search</button>
+      </form>
+      <div id="movie-dropdown" class="dropdown-content">
+        <!-- Movie names will be displayed here -->
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function showMovies() {
+      var input, filter, ul, li, a, i, txtValue;
+      input = document.getElementById("movie_title");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("movie-dropdown");
+      li = ul.getElementsByTagName("p");
+      for (i = 0; i < li.length; i++) {
+        a = li[i];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          li[i].style.display = "";
+        } else {
+          li[i].style.display = "none";
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

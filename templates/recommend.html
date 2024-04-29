@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recommendations</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="navbar">
+        <div class="brand">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="CineSuggest Logo">
+          <h1>CineSuggest</h1>
+        </div>
+        <div class="menu">
+          <ul>
+            <li>
+              <a href="{{ url_for('index') }}" class="recommend-btn">Back to Search</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <h2>Recommended Movies</h2>
+      <div class="recommended-movies">
+        <h3>Movies Based on the Selected Genre:</h3>
+        <ul>
+          {% for movie in recommended_movies %}
+            <li>
+              <a href="#" class="movie-link">{{ movie }}</a>
+              <div class="movie-details" style="display: none;">
+                <p><strong>Overview:</strong> {{ movie_overview.get(movie, 'N/A') }}</p>
+                <p><strong>Genre:</strong> {{ movie_genre.get(movie, 'N/A') }}</p>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+        <h3>Movies from Last Two Searches:</h3>
+        <ul>
+          {% for movie in last_two_recommendations %}
+            <li>
+              <a href="#" class="movie-link">{{ movie }}</a>
+              <div class="movie-details" style="display: none;">
+                <p><strong>Overview:</strong> {{ movie_overview.get(movie, 'N/A') }}</p>
+                <p><strong>Genre:</strong> {{ movie_genre.get(movie, 'N/A') }}</p>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const movieLinks = document.querySelectorAll('.movie-link');
+    movieLinks.forEach(link => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const details = link.nextElementSibling;
+        if (details.style.display === 'none') {
+          details.style.display = 'block';
+        } else {
+          details.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
